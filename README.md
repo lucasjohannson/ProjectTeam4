@@ -13,7 +13,7 @@ public class Restaurant {
 	private int price;
 	private String cuisine;
 	
-	
+	//GETTER
 	public String getName() {
 		return this.name;
 	}
