@@ -10,9 +10,8 @@ public class RestaurantList {
 	
 	public void searchCuisine(String s) {
 		
-		String searched = s.toUpperCase();
 		for (int i = 0; i < restaurantList.size(); i++){
-			if(restaurantList.get(i).getCuisine() == searched) {
+			if(restaurantList.get(i).getCuisine() == s) {
 				System.out.println(restaurantList.get(i).toString());
 			}
 		}
@@ -33,6 +32,7 @@ public class RestaurantList {
 			if(restaurantList.get(i).getFavourites() == true) {
 				System.out.println(restaurantList.get(i).toString());
 			}
+
 		}
 	}
 }
