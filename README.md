@@ -76,12 +76,12 @@ public class Restaurant {
 		  }
 		import java.util.ArrayList;
 
-public class RestrauntList {
+public class RestaurantList {
 
-private ArrayList<Restraunt> restrauntList = new ArrayList<Restraunt>();
+private ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
 	
-	public void addRestraunt(Restraunt newRestraunt) {
-		restrauntList.add(newRestraunt);
+	public void addRestaurant(Restaurant newRestaurant) {
+		restaurantList.add(newRestaurant);
 	}
 }
 
