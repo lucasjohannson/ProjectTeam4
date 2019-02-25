@@ -8,41 +8,47 @@
 import java.util.ArrayList;
 
 public class Restaurant {
+	//instance variables
 	private String name;
 	private boolean favourites;
 	private int price;
 	private String cuisine;
 	
-	
+	//GETTER 
 	public String getName() {
 		return this.name;
 	}
-	
+	//GETTER
 	public boolean getFavourites() {
 		return this.favourites;
 	}
-	
+	//GETTER
 	public int getPrice() {
 		return this.price;
 	}
 	
+	//GETTER
 	public String getCuisine() {
 		return this.cuisine;
 		
 	}
 	
+	//SETTER
 	public void setName(String n) {
 		this.name = n;
 	}
 	
+	//SETTER
 	public void setFavourites (boolean f) {
 		this.favourites = f;
 	}
 	
+	//SETTER
 	public void setPrice (int p) {
 		this.price = p;
 	}
 	
+	//SETTER
 	public void setCuisine (String c) {
 		this.cuisine = c;
 	}
@@ -63,6 +69,7 @@ public class Restaurant {
 		
 	}
 	
+	// COPY CONSTRUCTOR
 	public Restaurant(Restaurant toCopy) {
 		this.name = toCopy.name;
 		this.favourites = toCopy.favourites;
@@ -70,7 +77,8 @@ public class Restaurant {
 		this.price = toCopy.price;
 	}
 	
-	  public String toString() {
+	//TO STRING CONSTRUCTOR 
+	public String toString() {
 		return name;
 		    
 		  }
