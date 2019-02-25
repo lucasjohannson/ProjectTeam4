@@ -2,7 +2,7 @@
 public class Restaurant {
 	
 	private String name;
-	private boolean favourites;
+	private boolean favourites = false;
 	private int price;
 	private String cuisine;
 	
@@ -63,6 +63,6 @@ public class Restaurant {
 	}
 
 	public String toString() {
-		return name;   
+		return name + ", Price: + price + , " + cuisine + " restaurant";	    
 	}
 }
