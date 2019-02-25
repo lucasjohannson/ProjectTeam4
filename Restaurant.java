@@ -63,6 +63,6 @@ public class Restaurant {
 	}
 
 	public String toString() {
-		return name + ", Price: + price + , " + cuisine + " restaurant";	    
+		return name + ", Price: " + price + ", " + cuisine + " restaurant";	    
 	}
 }
