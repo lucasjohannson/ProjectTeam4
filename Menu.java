@@ -60,12 +60,15 @@ public class Menu {
 		switch(input) {
 		case 1:
 			restaurants.searchCuisine("PIZZA");
+			System.out.println();
 			break;
 		case 2:
 			restaurants.searchCuisine("BURGERS");
+			System.out.println();
 			break;
 		case 3:
 			restaurants.searchCuisine("SUSHI");
+			System.out.println();
 			break;
 		case 4:
 			this.mainMenu();
@@ -92,18 +95,23 @@ public class Menu {
 		switch(input) {
 		case 1:
 			restaurants.searchPrice(1);
+			System.out.println();
 			break;
 		case 2:
 			restaurants.searchPrice(2);
+			System.out.println();
 			break;
 		case 3:
 			restaurants.searchPrice(3);
+			System.out.println();
 			break;
 		case 4:
 			restaurants.searchPrice(4);
+			System.out.println();
 			break;
 		case 5:
 			restaurants.searchPrice(5);
+			System.out.println();
 			break;
 		case 6:
 			this.mainMenu();
