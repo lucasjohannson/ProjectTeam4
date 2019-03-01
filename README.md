@@ -1,4 +1,5 @@
 # ProjectTeam4
+#For this project we are doing a restaruant app,that user can find a restraunt for desired food type and price,and also give favorite recomandations as well.We may work on the rating and comments later as well.
 #Research Restaurant
 #1.data base<sorts of restaurant><food type><price><address><hours>
 #2.prompt for user imput
