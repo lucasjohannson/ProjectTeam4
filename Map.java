@@ -1,11 +1,13 @@
+import java.io.*;
+import java.util.Scanner;
 
 public class Map {
 	
 	private char[][] grid;
 	private boolean hasFlipper = false;
 	private Player player;
-	private int MAP_X_BOUND = grid.length;
-	private int MAP_Y_BOUND = grid[0].length;
+	private int MAX_X_BOUND = 50;
+	private int MAX_Y_BOUND = 50;
 	
 	public boolean isValidMove(Location location, Direction direction) {
 		
@@ -18,13 +20,13 @@ public class Map {
 				return false;
 			}
 		case EAST:
-			if(player.getLocation().getEast().getX() <= MAP_X_BOUND) {
+			if(player.getLocation().getEast().getX() <= grid[player.getLocation().getX()].length) {
 			return isMoveableTerrain(player.getLocation().getEast());
 			} else {
 				return false;
 			}
 		case SOUTH:
-			if(player.getLocation().getSouth().getY() <= MAP_Y_BOUND) {
+			if(player.getLocation().getSouth().getY() <= grid.length) {
 			return isMoveableTerrain(player.getLocation().getSouth());
 			} else {
 				return false;
@@ -52,6 +54,8 @@ public class Map {
 			return false;
 		case 68:
 			return false;
+		case 69:
+			return true;
 		case 126:
 			if (hasFlipper == true) {
 			return true;
@@ -70,16 +74,28 @@ public class Map {
 			switch(direction) {
 			
 			case NORTH:
-				player.setLocation(player.getLocation().getNorth());
+				Location north = new Location(player.getLocation().getNorth());
+				grid[player.getLocation().getX()][player.getLocation().getY()] = 46;
+				grid[north.getX()][north.getY()] = 80;
+				player.setLocation(north);
 				break;
 			case EAST:
-				player.setLocation(player.getLocation().getEast());
+				Location east = new Location(player.getLocation().getEast());
+				grid[player.getLocation().getX()][player.getLocation().getY()] = 46;
+				grid[east.getX()][east.getY()] = 80;
+				player.setLocation(east);
 				break;
 			case SOUTH:
-				player.setLocation(player.getLocation().getSouth());
+				Location south = new Location(player.getLocation().getSouth());
+				grid[player.getLocation().getX()][player.getLocation().getY()] = 46;
+				grid[south.getX()][south.getY()] = 80;
+				player.setLocation(south);
 				break;
 			case WEST:
-				player.setLocation(player.getLocation().getWest());
+				Location west = new Location(player.getLocation().getWest());
+				grid[player.getLocation().getX()][player.getLocation().getY()] = 46;
+				grid[west.getX()][west.getY()] = 80;
+				player.setLocation(west);
 				break;
 			}
 		} else {
@@ -92,15 +108,35 @@ public class Map {
 		return grid[location.getX()][location.getY()];
 	}
 	
-	public void setGrid(char[][] aGrid) {
-		
-		grid = aGrid;
-	}
-	
 	public void printMap() {
 		
 		for(int i = 0; i < grid.length; i++) {
 			System.out.println(grid[i]);
+		}
+	}
+	
+	public void setGrid(String filename) {
+		
+		try {
+			Scanner scan = new Scanner(new BufferedReader(new FileReader(filename)));
+			char[][] fromText = new char[MAX_Y_BOUND][MAX_X_BOUND];
+			int counter = 0;
+			
+			while (scan.hasNextLine()) {
+				String line = scan.nextLine();
+				
+				for (int i = 0; i < line.length(); i++) {
+					fromText[counter][i] = line.charAt(i);
+				}
+				counter++;
+			}
+			scan.close();
+			grid = fromText;
+
+		}
+		
+		catch(FileNotFoundException e) {
+			System.out.println("File could not be found");
 		}
 	}
 }
