@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class PLayer{
+public class Player{
   
   private int health = 100;
   private ArrayList<> items = new ArrayList<>();
