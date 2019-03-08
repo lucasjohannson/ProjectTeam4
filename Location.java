@@ -1,4 +1,4 @@
-publc clas Location {
+publc class Location {
 
 private int xCoord;
 private int yCoord;
