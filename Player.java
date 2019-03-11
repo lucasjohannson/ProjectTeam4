@@ -16,7 +16,7 @@ public class Player{
   }
   
   public boolean hasItem (){
-    if (len.Arraylist<items> > 0) {
+    if (Arrays.items.contains(Weapon)) {
       hasItem = true;
     }
   }
