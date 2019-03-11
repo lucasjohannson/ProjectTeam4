@@ -16,7 +16,7 @@ public class Player{
   }
   
   public boolean hasItem (){
-    if (len.Arraylist<collectible> > 0) {
+    if (len.Arraylist<items> > 0) {
       hasItem = true;
     }
   }
