@@ -49,7 +49,6 @@ public class TextApp {
 	
 		boolean loop = false;
 		
-		do {
 		System.out.println("Please enter the name of the text file which contains your desired map:");
 		
 		String input1 = scan.next();
@@ -61,6 +60,7 @@ public class TextApp {
 		map.printMap();
 		System.out.println("Press Y to play using this map or press N if you would like to specify another map");
 		
+		do {
 		String input2 = scan.next();
 		
 		switch(input2) {
@@ -70,7 +70,7 @@ public class TextApp {
 			mainMenu();
 			break;
 		case "N":
-			loop = true;
+			changeMap();
 			break;
 		default:
 			loop = true;
