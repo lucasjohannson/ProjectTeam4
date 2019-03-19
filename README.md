@@ -1,90 +1,30 @@
 # ProjectTeam4
-#For this project we are doing a restaruant app,that user can find a restraunt for desired food type and price,and also give favorite recomandations as well.We may work on the rating and comments later as well.
-#Research Restaurant
-#1.data base<sorts of restaurant><food type><price><address><hours>
-#2.prompt for user imput
-#3.Pull out the restaurant imformation.
-#4.give output
+
+This project is an adventure game. Players must navigate a map and progress by picking up collectibles to get past obstacles and defeating enemies.
+
+TO PLAY THE GAME:
+
+All files must be contained in the same directory, except for the map and initialization files the game asks for, which must be placed in the PARENT directory.
+
+CONSOLE VERSION:
  
-import java.util.ArrayList;
+First, compile the files in the console and then run TextApp.java to play the console version.
 
-public class Restaurant {
-	private String name;
-	private boolean favourites;
-	private int price;
-	private String cuisine;
-	
-	//GETTER
-	public String getName() {
-		return this.name;
-	}
-	
-	public boolean getFavourites() {
-		return this.favourites;
-	}
-	
-	public int getPrice() {
-		return this.price;
-	}
-	
-	public String getCuisine() {
-		return this.cuisine;
-		
-	}
-	
-	public void setName(String n) {
-		this.name = n;
-	}
-	
-	public void setFavourites (boolean f) {
-		this.favourites = f;
-	}
-	
-	public void setPrice (int p) {
-		this.price = p;
-	}
-	
-	public void setCuisine (String c) {
-		this.cuisine = c;
-	}
-	
-	public Restaurant (String name) {
-		this.name = name;
-	}
-	
-	public Restaurant (String name, String cuisine) {
-		this.name = name;
-		this.cuisine = cuisine;
-	}
-	
-	public Restaurant (String name, String cuisine, int price) {
-		this.name = name;
-		this.cuisine = cuisine;
-		this.price = price; 
-		
-	}
-	
-	public Restaurant(Restaurant toCopy) {
-		this.name = toCopy.name;
-		this.favourites = toCopy.favourites;
-		this.cuisine = toCopy.cuisine;
-		this.price = toCopy.price;
-	}
-	
-	  public String toString() {
-		return name;
-		    
-		  }
-		import java.util.ArrayList;
+If done properly, the game will prompt you to either "Play current map", "Load a map" or "Exit".
 
-public class RestaurantList {
+Select option 2, "Load a map". The game will prompt you to enter the name of a file, which it will read from to create the grid for the map you will be navigating. THE MAP MUST BE CONTAINED IN THE PARENT DIRECTORY TO THE OTHER GAME FILES OR THE GAME WILL NOT BE ABLE TO FIND THE FILE. The game will create a preview of the map from the file you selected, press Y to continue to the next step or N if you wanted to specify another map.
 
-private ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
-	
-	public void addRestaurant(Restaurant newRestaurant) {
-		restaurantList.add(newRestaurant);
-	}
-}
+If you are happy with the map you have selected, the game will then prompt you for an "initialization file". This will populate the map with the events contained in the map, such as enemy and item locations, as well as player start locations and the location of the endpoint. Please type the name of the file containing the initialization data. AS WITH THE MAP FILE, THE INITIALIZATION FILE MUST ALSO BE CONTAINED IN THE PARENT DIRECTORY. Press Y to continue on to the game or press N to if you typed the wrong initialization file to try again.
 
-		
-}
+GAME BASICS:
+
+At this point, you will be inside the game. You can prompt your character to move by selecting N for North, E for East, W for West and S for South. You can also open your inventory and look at the items you have collected by pressing I. You can return to the main menu by pressing M.
+
+MAP SYMBOLS:
+
+Walls in the game are represented by a "#"
+Basic moveable terrain in the game is represented by "."
+The Player is represented by "P"
+Collectible items are represented by "o"
+Enemies are represented by "E"
+Doors are represented by "D"
