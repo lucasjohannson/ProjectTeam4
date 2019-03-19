@@ -23,8 +23,13 @@ At this point, you will be inside the game. You can prompt your character to mov
 MAP SYMBOLS:
 
 Walls in the game are represented by a "#"
+
 Basic moveable terrain in the game is represented by "."
+
 The Player is represented by "P"
+
 Collectible items are represented by "o"
+
 Enemies are represented by "E"
+
 Doors are represented by "D"
