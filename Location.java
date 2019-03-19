@@ -1,3 +1,6 @@
+/**
+*A class which identifies the location an object is placed on a 2D plane. Contains and x and a y co-ordinate
+**/
 
 public class Location {
 
