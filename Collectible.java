@@ -3,6 +3,7 @@ public abstract class Collectible {
 	
 	private String name;
 	private Location location = new Location(0, 0);
+	private static final char token = 111;
 	
 	public Collectible() {
 		setName("Default");
@@ -55,6 +56,9 @@ public abstract class Collectible {
 		Location l1 = new Location(location);
 		return l1.getY();
 	}
+	
+	public void setToken(char[][] aGrid) {
+		aGrid[getY()][getX()] = token;
 	
 	public abstract void useItem(Player aPlayer);
 	
