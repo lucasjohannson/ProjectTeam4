@@ -30,13 +30,14 @@ public class Player{
 	  setLocation(toCopy.getLocation());
   }
   public attackType(Enemy enemy){
-	int a = enemy.getcurrentHealth() - getAttack();
-		
-		
+	if (enemy.getcurrentHealth() >= 0){
+	int a = enemy.getcurrentHealth() - weapon.getDamage();
+	}
+	return a			
   }
 	
 public attacktoString() {
-	return null;
+	return "You attacked with a " + player.items.getweapon() + ". Enemy health decreased to " + enemy.getcurrenthealth() ;
 
 
 }
