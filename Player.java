@@ -29,7 +29,17 @@ public class Player{
 	  setAttack(toCopy.getAttack());
 	  setLocation(toCopy.getLocation());
   }
-  
+  public attackType(Enemy enemy){
+	int a = enemy.getcurrentHealth() - getAttack();
+		
+		
+  }
+	
+public attacktoString() {
+	return null;
+
+
+}
   public boolean hasItem(Collectible collectible){
 	  boolean hasItem = false;
 	  if (items.size() > 0 && items.contains(collectible)) {
@@ -95,14 +105,17 @@ public class Player{
   public Direction getDirection() {
 	  return direction;
   }
-  
+	
+	
   public int getAttack() {
 	  return attack;
   }
 	
   public ArrayList<Character> getTiles() {
 	  return moveableTile;
-  }	  
+  }
+	
+	
 
 }
 
