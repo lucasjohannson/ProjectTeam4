@@ -59,7 +59,8 @@ public abstract class Collectible {
 	
 	public void setToken(char[][] aGrid) {
 		aGrid[getY()][getX()] = token;
-	
+	}
+		
 	public abstract void useItem(Player aPlayer);
 	
 }

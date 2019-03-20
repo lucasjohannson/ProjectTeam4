@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Map {
 	
 	private char[][] grid;
-	private char[][] originalGrid;
+	private char[][] baseGrid;
 	
 	public boolean isValidMove(Location location, Direction direction) {
 		
@@ -41,7 +41,7 @@ public class Map {
 	
 	public boolean isMoveableTerrain(Location location) {
 		
-		char tile = getElement(location);
+		char tile = getTile(location);
 		boolean canMove = true;
 		
 		switch(tile) {
@@ -82,30 +82,34 @@ public class Map {
 			
 			case NORTH:
 				Location north = new Location(location.getNorth());
-				grid[location.getY()][location.getX()] = 46;
-				grid[north.getY()][north.getX()] = 80;
+				grid[location.getY()][location.getX()] = '.';
+				grid[north.getY()][north.getX()] = 'P';
 				break;
 			case EAST:
 				Location east = new Location(location.getEast());
-				grid[location.getY()][location.getX()] = 46;
-				grid[east.getY()][east.getX()] = 80;
+				grid[location.getY()][location.getX()] = '.';
+				grid[east.getY()][east.getX()] = 'P';
 				break;
 			case SOUTH:
 				Location south = new Location(location.getSouth());
-				grid[location.getY()][location.getX()] = 46;
-				grid[south.getY()][south.getX()] = 80;
+				grid[location.getY()][location.getX()] = '.';
+				grid[south.getY()][south.getX()] = 'P';
 				break;
 			case WEST:
 				Location west = new Location(location.getWest());
-				grid[location.getY()][location.getX()] = 46;
-				grid[west.getY()][west.getX()] = 80;
+				grid[location.getY()][location.getX()] = '.';
+				grid[west.getY()][west.getX()] = 'P';
 				break;
 			}
 	}
 	
-	public char getElement(Location location) {
+	public char getTile(Location location) {
 		
 		return grid[location.getY()][location.getX()];
+	}
+	
+	public void setTile(Location location, char element) {
+		grid[location.getY()][location.getX()] = element;
 	}
 	
 	public char[][] copyGrid(char[][] aGrid) {
