@@ -5,7 +5,7 @@ public class Player{
   private int currentHP = 100;
   private int attack = 1;
   private ArrayList<Collectible> items = new ArrayList<>();
-  private ArrayList<char> moveableTile = new ArrayList<>();
+  private ArrayList<Character> moveableTile = new ArrayList<>();
   private Location location; 
   private Direction direction = Direction.SOUTH;
   
@@ -17,6 +17,10 @@ public class Player{
 	  maxHP = hp;
 	  setHP(maxHP);
 	  setAttack(att);
+	  moveableTile.add('.');
+	  moveableTile.add('E');
+	  moveableTile.add('o');
+	  moveableTile.add('@');
   }
   
   public Player(Player toCopy) {
@@ -96,8 +100,8 @@ public class Player{
 	  return attack;
   }
 	
-  public ArrayList<char> getTiles() {
-	  return moveableTiles;
+  public ArrayList<Character> getTiles() {
+	  return moveableTile;
   }	  
 
 }
