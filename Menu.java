@@ -1,143 +1,146 @@
-import java.util.Scanner;
 
-public class Menu {
-	
-	Scanner scan = new Scanner (System.in);
-	private RestaurantList restaurants = new RestaurantList();
-	
-	public void mainMenu() {
+	import java.io.IOException;
+
+
+	import java.io.InputStream;
+	import java.nio.*;
+	import java.nio.file.Files;
+	import java.nio.file.Paths;
+
+	import javafx.application.*;
+	import javafx.stage.*;
+	import javafx.geometry.*;
+	import javafx.scene.*;
+	import javafx.scene.image.Image;
+	import javafx.scene.image.ImageView;
+	import javafx.scene.layout.Pane;
+	import javafx.scene.layout.StackPane;
+	import javafx.scene.layout.VBox;
+	import javafx.scene.paint.Color;
+	import javafx.scene.paint.CycleMethod;
+	import javafx.scene.paint.LinearGradient;
+	import javafx.scene.paint.Stop;
+	import javafx.scene.shape.Line;
+	import javafx.scene.shape.Rectangle;
+	import javafx.scene.text.Font;
+	import javafx.scene.text.FontWeight;
+	import javafx.scene.text.*;
+
+	public class Menu extends Application{
 		
-		boolean loop = true;
-		do {
+		private Parent createContent() {
+			Pane root = new Pane();
 			
-		System.out.println("RESTAURANT FINDER");
-		System.out.println();
-		System.out.println("Please select a search option:");
-		System.out.println("1. Search by cuisine type");
-		System.out.println("2. Search by price");
-		System.out.println("3. Search my favourites");
-		System.out.println("4. Stop");
-		
-		int input = scan.nextInt();
-		
-		switch(input) {
-		
-		case 1:
-			this.cuisineMenu();
-			break;
-		
-		case 2:
-			this.priceMenu();
-			break;
+			root.setPrefSize(1050, 600);
 			
-		case 3:
-			this.favouritesMenu();
-		
-		case 4:
-			loop = false;
-			break;
+			try(InputStream is = Files.newInputStream(Paths.get("galaxy.png"))){
+				ImageView img = new ImageView(new Image(is));
+				img.setFitWidth(1050);
+				img.setFitHeight(600);
+				root.getChildren().add(img);
+			}
+			catch(IOException e) {
+				System.out.println("Couldn't load image");
+			}
 			
-		default: 
-			System.out.println("Please enter a number corresponding to the menu options \n");
+			Title title = new Title ("ANIMATED MAZE GAME");
+			title.setTranslateX(50);
+			title.setTranslateY(200);
+			
+			MenuBox vbox = new MenuBox(
+					new MenuItem("NEW GAME"),	
+					new MenuItem("HIGHSCORES"));
+			vbox.setTranslateX(100);
+			vbox.setTranslateY(300);
+			
+			root.getChildren().addAll(title,vbox);
+			
+			return root;
+			
 		}
-		} while(loop == true);
-	}
-	
-	public void cuisineMenu() {
-	
-		boolean loop = true;
+		@Override
+		public void start(Stage primaryStage) throws Exception{
+			Scene scene = new Scene(createContent());
+			primaryStage.setTitle("ANIMATION GAME");
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		}
 		
-		do {
-		System.out.println("Please select your cuisine type:");
-		System.out.println();
-		System.out.println("1.Pizza");
-		System.out.println("2.Burgers");
-		System.out.println("3.Sushi");
-		System.out.println("4. Go back to main menu");
+		private static class Title extends StackPane{
+			public Title(String name) {
+				
+				Text text = new Text(name);
+				text.setFill(Color.BLACK);
+				text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 50));
+				
+				setAlignment(Pos.CENTER);
+				getChildren().addAll(text);
+			}
+		}
 		
-		int input = scan.nextInt();
+		private static class MenuBox extends VBox{
+			public MenuBox(MenuItem...items) {
+				getChildren().add(createSeperator());
+				
+				for(MenuItem item : items) {
+					getChildren().addAll(item, createSeperator());
+				}
+			}
+			
+			private Line createSeperator() {
+				Line sep = new Line();
+				sep.setEndX(210);
+				sep.setStroke(Color.WHITE);
+				return sep;
+			}
+			
+		}
 		
-		switch(input) {
-		case 1:
-			restaurants.searchCuisine("PIZZA");
-			System.out.println();
-			break;
-		case 2:
-			restaurants.searchCuisine("BURGERS");
-			System.out.println();
-			break;
-		case 3:
-			restaurants.searchCuisine("SUSHI");
-			System.out.println();
-			break;
-		case 4:
-			this.mainMenu();
-			break;
-		default: 
-			System.out.println("Please enter a number corresponding to the menu options \n");
-		}	
-		} while (loop == true);
-	}
-	
-	public void priceMenu() {
-		
-		System.out.println("Please select your preferred price range:");
-		System.out.println();
-		System.out.println("1.$");
-		System.out.println("2.$$");
-		System.out.println("3.$$$");
-		System.out.println("4.$$$$");
-		System.out.println("5.$$$$$");
-		System.out.println("6. Go back to main menu");
-		
-		int input = scan.nextInt();
-		
-		switch(input) {
-		case 1:
-			restaurants.searchPrice(1);
-			System.out.println();
-			break;
-		case 2:
-			restaurants.searchPrice(2);
-			System.out.println();
-			break;
-		case 3:
-			restaurants.searchPrice(3);
-			System.out.println();
-			break;
-		case 4:
-			restaurants.searchPrice(4);
-			System.out.println();
-			break;
-		case 5:
-			restaurants.searchPrice(5);
-			System.out.println();
-			break;
-		case 6:
-			this.mainMenu();
-			break;
-		default: 
-			System.out.println("Please enter a number corresponding to the menu options \n");
-		}	
-	}
-	
-	public void favouritesMenu() {
-		restaurants.searchFavourites();
-	}
-	
-	public static void main(String[] args) {
 
-		Menu m = new Menu();
+		private static class MenuItem extends StackPane{
+			public MenuItem(String name) {
+				LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] { 
+					new Stop(0, Color.DARKBLUE),
+					new Stop(0.1, Color.BLACK),
+					new Stop(0.9, Color.BLACK),
+					new Stop(1, Color.DARKBLUE)
+					
+				});
+				
+				Rectangle bg = new Rectangle(200,30);
+				bg.setOpacity(0.4);
+				
+				Text text = new Text(name);
+				text.setFill(Color.WHITE);
+				text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,20));
+				
+				setAlignment(Pos.CENTER);
+				getChildren().addAll(bg, text);
+				setOnMouseEntered(event -> {
+					bg.setFill(gradient);
+					text.setFill(Color.BLACK);
+					
+				});
+				
+				setOnMouseExited(event -> {
+					bg.setFill(Color.BLACK);
+					text.setFill(Color.WHITE);
+				});
+				setOnMousePressed(event -> {
+					bg.setFill(Color.DARKVIOLET);
+					
+				});
+				
+				setOnMouseReleased(event -> {
+					bg.setFill(gradient);
+				});
+				
+				}
+			}
 
-		Restaurant a = new Restaurant("Mcdonalds", "BURGERS", 1);
-		Restaurant b = new Restaurant("Bob's Burgers", "BURGERS", 2);
-		Restaurant c = new Restaurant("Oishi Sushi", "SUSHI", 3);
-		Restaurant d = new Restaurant("Pepehands Pizza", "PIZZA", 5);
-		
-		m.restaurants.addRestaurant(a);
-		m.restaurants.addRestaurant(b);
-		m.restaurants.addRestaurant(c);
-		m.restaurants.addRestaurant(d);
-		m.mainMenu();
+		public static void main(String[] args) {
+			
+			launch(args);
+		}
 	}
-}
+
