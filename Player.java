@@ -31,7 +31,7 @@ public class Player{
   }
   public attackType(Enemy enemy){
 	if (enemy.getcurrentHealth() >= 0){
-	int a = enemy.getcurrentHealth() - weapon.getDamage();
+	int a = enemy.getcurrentHealth() - getAttack();
 	}
 	return a			
   }
