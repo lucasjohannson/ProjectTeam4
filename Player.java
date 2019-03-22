@@ -29,7 +29,7 @@ public class Player{
 	  setAttack(toCopy.getAttack());
 	  setLocation(toCopy.getLocation());
   }
-  public attackType(Enemy enemy){
+  public attackEvent(Enemy enemy){
 	if (enemy.getcurrentHealth() >= 0){
 	int a = enemy.getcurrentHealth() - getAttack();
 	}
