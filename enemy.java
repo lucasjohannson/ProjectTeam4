@@ -73,6 +73,13 @@ public class enemy {
 	//SETTER
 	public void attack() {
 	}
+	
+	public attackEvent(PLayer player){
+		if (player.getcurrentHealth() >= 0){
+		int a = enemy.getcurrentHealth() - getpower();
+		}
+		return a			
+  }
 
 	
 }
