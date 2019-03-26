@@ -70,4 +70,8 @@ private int yCoord;
 		}
 		return equal;
 	}
+	
+	public String toString() {
+		return "The x coordinate is " + xCoord + " and the y coordinate is " + yCoord;
+	}
 }

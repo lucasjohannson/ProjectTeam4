@@ -6,7 +6,7 @@ public class Player{
   private int attack = 1;
   private ArrayList<Collectible> items = new ArrayList<>();
   private ArrayList<Character> moveableTile = new ArrayList<>();
-  private Location location; 
+  private Location location = new Location(0,0); 
   private Direction direction = Direction.SOUTH;
   
   public Player() {
@@ -62,7 +62,7 @@ public class Player{
   public void setLocation(Location location) {
 	  
 	  Location l1 = new Location(location);
-	  location = l1;
+	  this.location = l1;
   }
   
   public void setLocation(int x, int y) {

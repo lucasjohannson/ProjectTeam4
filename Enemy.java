@@ -9,7 +9,7 @@ public class Enemy {
 	private int currentHealth;
 	private int power;
 	private int speed; 
-	private Location location; 
+	private Location location = new Location(0,0); 
 	private static final char token = 'E';
 
 	public Enemy(String aName, int xCoord, int yCoord, int attack, int maxHP) {
