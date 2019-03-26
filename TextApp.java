@@ -6,6 +6,7 @@ public class TextApp {
 	Scanner scan = new Scanner (System.in);
 	private Map map = new Map();
 	private Player player = new Player();
+	private EventCheck eventChecker;
 	private ArrayList<Enemy> enemyList = new ArrayList<>();
 	private ArrayList<Collectible> collectibleList = new ArrayList<>();
 	private Location endpoint = new Location();

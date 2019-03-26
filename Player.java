@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 public class Player{
   
-  private static int maxHP = 100;
+  private int maxHP = 100;
   private int currentHP = 100;
   private int attack = 1;
   private ArrayList<Collectible> items = new ArrayList<>();
@@ -11,6 +11,10 @@ public class Player{
   
   public Player() {
 	  setLocation(0,0);
+	  moveableTile.add('.');
+	  moveableTile.add('E');
+	  moveableTile.add('o');
+	  moveableTile.add('@');
   }
   
   public Player(int hp, int att) {
@@ -29,18 +33,19 @@ public class Player{
 	  setAttack(toCopy.getAttack());
 	  setLocation(toCopy.getLocation());
   }
-  public attackEvent(Enemy enemy){
-	if (enemy.getcurrentHealth() >= 0){
-	int a = enemy.getcurrentHealth() - getAttack();
-	}
-	return a			
+  public int attackEvent(Enemy enemy){
+	  int a = 0;
+	  if (enemy.getcurrentHealth() >= 0){
+		  a = enemy.getcurrentHealth() - getAttack();
+	  }
+	  return a;			
   }
 	
-public attacktoString() {
-	return "You attacked with a " + player.items.getweapon() + ". Enemy health decreased to " + enemy.getcurrenthealth() ;
+//public String attacktoString() {
+	//return "You attacked with a " + player.items.getweapon() + ". Enemy health decreased to " + enemy.getcurrenthealth() ;
 
 
-}
+//}
   public boolean hasItem(Collectible collectible){
 	  boolean hasItem = false;
 	  if (items.size() > 0 && items.contains(collectible)) {
@@ -57,7 +62,7 @@ public attacktoString() {
   public void setLocation(Location location) {
 	  
 	  Location l1 = new Location(location);
-	  this.location = l1;
+	  location = l1;
   }
   
   public void setLocation(int x, int y) {
@@ -78,7 +83,11 @@ public attacktoString() {
   }
   
   public void setHP(int health) {
-	  currentHP = health;
+	  if (health >= 0) {
+		  currentHP = health;
+	  } else {
+		  currentHP = 0;
+	  }
   }
   
   public void addTile(char tile) {
@@ -119,5 +128,3 @@ public attacktoString() {
 	
 
 }
-
-
