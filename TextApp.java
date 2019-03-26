@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,9 +7,9 @@ public class TextApp {
 	Scanner scan = new Scanner (System.in);
 	private Map map = new Map();
 	private Player player = new Player();
-	private EventCheck eventChecker;
-	private ArrayList<Enemy> enemyList = new ArrayList<>();
-	private ArrayList<Collectible> collectibleList = new ArrayList<>();
+	private EventCheck eventChecker = new EventCheck();
+	private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+	private ArrayList<Collectible> collectibleList = new ArrayList<Collectible>();
 	private Location endpoint = new Location();
 	
 	
@@ -47,8 +48,6 @@ public class TextApp {
 	}
 	
 	public void changeMap() {
-	
-		boolean loop = false;
 		
 		System.out.println("Please enter the name of the text file which contains your desired map:");
 		
@@ -61,23 +60,39 @@ public class TextApp {
 		map.printMap();
 		System.out.println("Press Y to play using this map or press N if you would like to specify another map");
 		
-		do {
+	
 		String input2 = scan.next();
 		
 		switch(input2) {
 		
 		case "Y":
-			loop = false;
-			mainMenu();
+			initializeMap();
 			break;
 		case "N":
 			changeMap();
 			break;
 		default:
-			loop = true;
 			System.out.println("Please choose either Y or N");
+			changeMap();
 		}
-		} while (loop == true);
+	}
+	
+	public void initializeMap() {
+		System.out.println();
+		System.out.println("Please enter the name of the initialization file for this map:");
+		String input = scan.next();
+		try {
+			eventChecker.setInitialization(input);
+			eventChecker.initializeMap(map);
+			player.setLocation(eventChecker.getStartpoint());
+			enemyList = eventChecker.getEnemyList();
+			collectibleList = eventChecker.getItemList();
+			endpoint = eventChecker.getEndpoint();
+		} 
+		catch (FileNotFoundException e) {
+			System.out.println("The File could not be found");
+		}
+		mainMenu();
 	}
 	
 	public void play() {
@@ -86,15 +101,6 @@ public class TextApp {
 			System.out.println("Please load a map first!");
 			mainMenu();
 		}
-	//	for(int i = 0; i < map.getGrid().length; i++) {
-		//	for(int j = 0; j < map.getGrid()[i].length; j++) {
-		//		if(map.getGrid()[i][j] == 80){
-	//				player.setLocation(j, i);
-	//			}
-	//		}	
-	//	}
-		//System.out.println(player.getLocation().getX());
-		//System.out.println(player.getLocation().getY());
 		
 		boolean loop = true;
 		while(loop) {
@@ -280,12 +286,6 @@ public class TextApp {
 	public static void main(String[] args) {
 
 		TextApp t = new TextApp();
-		t.setEndpoint(1, 3);
-		Potion p = new Potion("Potion", 8, 3, 20);
-		Weapon s = new Weapon("Sword", 3, 1, 2);
-		t.addItem(p);
-		t.addItem(s);
-		t.getPlayer().setLocation(1, 1);
 		
 		t.mainMenu();
 		

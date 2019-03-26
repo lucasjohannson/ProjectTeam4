@@ -6,27 +6,18 @@ import java.util.Scanner;
 
 public class EventCheck {
 	
-	private Location startpoint;
-	private Location endpoint;
-	private ArrayList<Enemy> enemyList;
-	private ArrayList<Collectible> itemList;
-	private ArrayList<Location> doors;
+	private Location startpoint = new Location(0,0);
+	private Location endpoint = new Location (0, 0);
+	private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+	private ArrayList<Collectible> itemList = new ArrayList<Collectible>();
+	private ArrayList<Location> doors = new ArrayList<Location>();
 	
-	public void setInitialization(String filename) {
-		
-		try {
-			Scanner scan1 = new Scanner(new BufferedReader(new FileReader(filename)));
-			int ctr = 1;
-			int length = scan1.nextLine().length();
-			while(scan1.hasNextLine()) {
-				ctr = ctr + 1;
-				scan1.nextLine();
-			}
+	public void setInitialization(String filename) throws FileNotFoundException {
+				
+			Scanner scan = new Scanner(new BufferedReader(new FileReader(filename)));
 			
-			Scanner scan2 = new Scanner(new BufferedReader(new FileReader(filename)));
-			
-			for (int i = 0; i < ctr; i++) {
-				String line = scan2.nextLine();
+			while (scan.hasNextLine()) {
+				String line = scan.nextLine();
 				
 				switch(line.charAt(0)) {
 					
@@ -82,12 +73,8 @@ public class EventCheck {
 					break;
 				}
 			}
-			
+			scan.close();
 		}
-		catch(FileNotFoundException e) {
-			System.out.println("File could not be found");
-		}
-	}
 	
 	public void initializeMap(Map aMap) {
 		
