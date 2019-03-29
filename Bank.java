@@ -1,19 +1,26 @@
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Bank {
+	private TreeSet<Customer> customers;
 
-	private PriorityQueue<Customer> queuedCustomers = new PriorityQueue<>();
-	
-	
-	public void queueCustomer(Customer qCustomer) {
-	queuedCustomers.add(qCustomer);
+	public Bank(){
+		customers = new TreeSet<Customer>();
+	}
+
+	public void addCustomer(Customer c) {
+		customers.add(c);
 	}
 
 
+	public Customer[] getCustomers() {
+		int customersSize = customers.size();
+		Customer[] listToReturn = new Customer[customersSize];
+		for (int i = 0; i < customersSize; i++){
+			listToReturn[i] = customers.pollFirst();
 
-	public Customer nextCustomer() {
+		}
 
-		
-		return queuedCustomers.poll();
+		return listToReturn;
 	}
- }
+
+}
