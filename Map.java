@@ -4,33 +4,33 @@ import java.util.Scanner;
 public class Map {
 	
 	private char[][] grid;
-	private char[][] baseGrid;
+	private char[][] originalGrid;
 	
-	public boolean isValidMove(Location location, Direction direction) {
+	public boolean isValidMove(Player player, Location location, Direction direction) {
 		
 		switch(direction) {
 		
 		case NORTH:
 			if(location.getNorth().getY() >= 0) {
-			return isMoveableTerrain(location.getNorth());
+			return isMoveableTerrain(player, location.getNorth());
 			} else {
 				return false;
 			}
 		case EAST:
 			if(location.getEast().getX() <= grid[location.getY()].length) {
-			return isMoveableTerrain(location.getEast());
+			return isMoveableTerrain(player, location.getEast());
 			} else {
 				return false;
 			}
 		case SOUTH:
 			if(location.getSouth().getY() <= grid.length) {
-			return isMoveableTerrain(location.getSouth());
+			return isMoveableTerrain(player, location.getSouth());
 			} else {
 				return false;
 			}
 		case WEST:
 			if(location.getWest().getX() >= 0) {
-			return isMoveableTerrain(location.getWest());
+			return isMoveableTerrain(player, location.getWest());
 			} else {
 				return false;
 			}
@@ -39,40 +39,16 @@ public class Map {
 		}
 	}
 	
-	public boolean isMoveableTerrain(Location location) {
+	public boolean isMoveableTerrain(Player player, Location location) {
 		
 		char tile = getTile(location);
-		boolean canMove = true;
+		boolean canMove = false;
 		
-		switch(tile) {
-		
-			case 69: //E
+		for(char moveableTiles:player.getTiles()) {
+			if (moveableTiles == tile) {
 				canMove = true;
-				break;
-			case 64: //@
-				canMove = true;
-				break;
-			case 46: //.
-				canMove = true;
-				break;
-			case 35: //#
-				canMove = false;
-				break;
-			case 68: //D
-				canMove = false;
-				break;
-			case 111: //o
-				canMove = true;
-				break;
-			//case 126: //~
-				//if (player.hasItem(Flipper) {
-				//return true;
-				//} else {
-				//	return false;
-				//}	
-			default: 
-				canMove = false;
 			}
+		}
 		return canMove;
 	}
 	
@@ -81,24 +57,20 @@ public class Map {
 			switch(direction) {
 			
 			case NORTH:
-				Location north = new Location(location.getNorth());
-				grid[location.getY()][location.getX()] = '.';
-				grid[north.getY()][north.getX()] = 'P';
+				setTile(location, getOriginalTile(location));
+				setTile(location.getNorth(), 'P');
 				break;
 			case EAST:
-				Location east = new Location(location.getEast());
-				grid[location.getY()][location.getX()] = '.';
-				grid[east.getY()][east.getX()] = 'P';
+				setTile(location, getOriginalTile(location));
+				setTile(location.getEast(), 'P');
 				break;
 			case SOUTH:
-				Location south = new Location(location.getSouth());
-				grid[location.getY()][location.getX()] = '.';
-				grid[south.getY()][south.getX()] = 'P';
+				setTile(location, getOriginalTile(location));
+				setTile(location.getSouth(), 'P');
 				break;
 			case WEST:
-				Location west = new Location(location.getWest());
-				grid[location.getY()][location.getX()] = '.';
-				grid[west.getY()][west.getX()] = 'P';
+				setTile(location, getOriginalTile(location));
+				setTile(location.getWest(), 'P');
 				break;
 			}
 	}
@@ -106,6 +78,10 @@ public class Map {
 	public char getTile(Location location) {
 		
 		return grid[location.getY()][location.getX()];
+	}
+	
+	public char getOriginalTile(Location location) {
+		return originalGrid[location.getY()][location.getX()];
 	}
 	
 	public void setTile(Location location, char element) {
@@ -139,9 +115,8 @@ public class Map {
 		grid = aGrid;
 	}
 	
-	public void setGrid(String filename) {
+	public void setGrid(String filename) throws FileNotFoundException {
 			
-			try {
 				Scanner scan1 = new Scanner(new BufferedReader(new FileReader(filename)));
 				int ctr = 1;
 				int length = scan1.nextLine().length();
@@ -161,9 +136,8 @@ public class Map {
 					}
 				}
 				setGrid(fromText);
-			}
-			catch(FileNotFoundException e) {
-				System.out.println("File could not be found");
-			}
-	}
+				originalGrid = copyGrid(grid);
+				scan1.close();
+				scan2.close();
+		}
 }
