@@ -53,28 +53,34 @@ public class TextApp {
 		
 		String input1 = scan.next();
 		
-		map.setGrid(input1);
-		System.out.println("The text file you entered was " + input1);
-		System.out.println();
-		System.out.println("Would you like to play using this map?");
-		map.printMap();
-		System.out.println("Press Y to play using this map or press N if you would like to specify another map");
-		
-	
-		String input2 = scan.next();
-		
-		switch(input2) {
-		
-		case "Y":
-			initializeMap();
-			break;
-		case "N":
-			changeMap();
-			break;
-		default:
-			System.out.println("Please choose either Y or N");
+		try {
+			map.setGrid(input1);
+			System.out.println("The text file you entered was " + input1);
+			System.out.println();
+			System.out.println("Would you like to play using this map?");
+			map.printMap();
+			System.out.println("Press Y to play using this map or press N if you would like to specify another map");
+			String input2 = scan.next();
+			
+			switch(input2) {
+			
+			case "Y":
+				initializeMap();
+				break;
+			case "N":
+				changeMap();
+				break;
+			default:
+				System.out.println("Please choose either Y or N");
+				changeMap();
+			}
+		}
+		catch (FileNotFoundException fnfe){
+			System.out.println("File not Found!");
 			changeMap();
 		}
+	
+
 	}
 	
 	public void initializeMap() {
@@ -120,7 +126,7 @@ public class TextApp {
 				
 				case "N":
 
-					if(map.isValidMove(player.getLocation(), Direction.NORTH)) {
+					if(map.isValidMove(player, player.getLocation(), Direction.NORTH)) {
 						map.move(player.getLocation(), Direction.NORTH);
 						player.setLocation(player.getLocation().getNorth());
 						player.setDirection(Direction.NORTH);
@@ -132,7 +138,7 @@ public class TextApp {
 					}
 					break;
 				case "E":
-					if(map.isValidMove(player.getLocation(), Direction.EAST)) {
+					if(map.isValidMove(player, player.getLocation(), Direction.EAST)) {
 						map.move(player.getLocation(), Direction.EAST);
 						player.setLocation(player.getLocation().getEast());
 						player.setDirection(Direction.EAST);
@@ -144,7 +150,7 @@ public class TextApp {
 					}
 					break;
 				case "S":
-					if(map.isValidMove(player.getLocation(), Direction.SOUTH)) {
+					if(map.isValidMove(player, player.getLocation(), Direction.SOUTH)) {
 						map.move(player.getLocation(), Direction.SOUTH);
 						player.setLocation(player.getLocation().getSouth());
 						player.setDirection(Direction.SOUTH);
@@ -156,7 +162,7 @@ public class TextApp {
 					}
 					break;
 				case "W":
-					if(map.isValidMove(player.getLocation(), Direction.WEST)) {
+					if(map.isValidMove(player, player.getLocation(), Direction.WEST)) {
 						map.move(player.getLocation(), Direction.WEST);
 						player.setLocation(player.getLocation().getWest());
 						player.setDirection(Direction.WEST);
