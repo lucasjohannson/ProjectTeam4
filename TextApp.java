@@ -5,9 +5,10 @@ import java.util.Scanner;
 public class TextApp {
 	
 	Scanner scan = new Scanner (System.in);
+	private GameLogic logic = new GameLogic();
 	private Map map = new Map();
 	private Player player = new Player();
-	private EventCheck eventChecker = new EventCheck();
+	private GameData eventChecker = new GameData();
 	private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	private ArrayList<Collectible> collectibleList = new ArrayList<Collectible>();
 	private Location endpoint = new Location();
@@ -88,12 +89,9 @@ public class TextApp {
 		System.out.println("Please enter the name of the initialization file for this map:");
 		String input = scan.next();
 		try {
-			eventChecker.setInitialization(input);
-			eventChecker.initializeMap(map);
-			player.setLocation(eventChecker.getStartpoint());
-			enemyList = eventChecker.getEnemyList();
-			collectibleList = eventChecker.getItemList();
-			endpoint = eventChecker.getEndpoint();
+			logic.data.setInitialization(input);
+			logic.data.initializeMap(map);
+			logic.player.setLocation(logic.data.getStartpoint());
 		} 
 		catch (FileNotFoundException e) {
 			System.out.println("The File could not be found");
@@ -109,6 +107,7 @@ public class TextApp {
 		}
 		
 		boolean loop = true;
+		
 		while(loop) {
 			map.printMap();
 			System.out.println();
@@ -231,12 +230,18 @@ public class TextApp {
 	
 	public void checkEvent(Location location) {
 		
-		checkEnemy(location);
-		checkItem(location);
-		checkCompletion(location);
+		if(logic.checkCompletion(location)) {
+			System.out.println("You win!");
+		}
+		if(logic.checkEnemy(location)) {
+			battle();
+		}
+		if(logic.checkItem(location)) {
+			System.out.println("You have obtained a(n) " + logic.player.getItems().get(logic.player.getItems().size()).getName());
+		}
 	}
 	
-	public void checkEnemy(Location location) {
+	public void battle() {
 		
 		
 	}
