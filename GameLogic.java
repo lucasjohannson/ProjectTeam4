@@ -5,7 +5,7 @@ public class GameLogic {
 	protected Map map = new Map();
 	protected GameData data = new GameData();
 	
-	public void moveNorth() {
+	public void moveNorth()throws IndexOutOfBoundsException {
 		if(map.isValidMove(player, player.getLocation(), Direction.NORTH)) {
 			map.move(player.getLocation(), Direction.NORTH);
 			player.setLocation(player.getLocation().getNorth());
@@ -13,7 +13,7 @@ public class GameLogic {
 		}
 	}
 
-	public void moveEast() {
+	public void moveEast()throws IndexOutOfBoundsException {
 		if(map.isValidMove(player, player.getLocation(), Direction.EAST)) {
 			map.move(player.getLocation(), Direction.EAST);
 			player.setLocation(player.getLocation().getEast());
@@ -21,7 +21,7 @@ public class GameLogic {
 		}
 	}
 	
-	public void moveWest() {
+	public void moveWest() throws IndexOutOfBoundsException {
 		if(map.isValidMove(player, player.getLocation(), Direction.WEST)) {
 			map.move(player.getLocation(), Direction.WEST);
 			player.setLocation(player.getLocation().getWest());
@@ -29,7 +29,7 @@ public class GameLogic {
 		}
 	}
 	
-	public void moveSouth() {
+	public void moveSouth() throws IndexOutOfBoundsException {
 		if(map.isValidMove(player, player.getLocation(), Direction.SOUTH)) {
 			map.move(player.getLocation(), Direction.SOUTH);
 			player.setLocation(player.getLocation().getSouth());
@@ -43,8 +43,9 @@ public class GameLogic {
 			for(int i = 0; i < data.getItemList().size();) {
 				if(data.getItemList().get(i).getLocation().isEqual(location)) {
 					player.getItems().add(data.getItemList().get(i));
-					data.getItemList().remove(i);
 					hasItem = true;
+					data.getItemList().remove(i);
+					return hasItem;
 				} else {
 					i++;
 				}
@@ -59,6 +60,7 @@ public class GameLogic {
 			for(int i = 0; i < data.getEnemyList().size();) {
 				if(data.getEnemyList().get(i).getLocation().isEqual(location)) {
 					hasEnemy = true;
+					return hasEnemy;
 				} else {
 					i++;
 				}
@@ -67,9 +69,23 @@ public class GameLogic {
 		return hasEnemy;
 	}
 	
+	public Enemy getEnemy(Location location) {
+		Enemy enemy = new Enemy();
+		if(data.getEnemyList().size() > 0) {
+			for(int i = 0; i < data.getEnemyList().size();) {
+				if(data.getEnemyList().get(i).getLocation().isEqual(location)) {
+					return data.getEnemyList().get(i);
+				} else {
+					i++;
+				}
+			}
+		}
+		return enemy;
+	}
+	
 	public boolean checkCompletion(Location location) {
 		boolean complete = false;
-		if(player.getLocation().isEqual(location)) {
+		if(data.getEndpoint().isEqual(location)) {
 			complete = true;
 		}
 		return complete;
