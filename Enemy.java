@@ -17,6 +17,13 @@ public class Enemy {
 		setLocation(xCoord, yCoord);
 		setPower(attack);
 		setmaxCorHealth(maxHP);
+		setcurrentHealth(maxHP);
+	}
+	
+	public Enemy() {
+		setName(null);
+		setPower(1);
+		setmaxCorHealth(20);
 	}
 	
 	//GETTER 
@@ -30,12 +37,12 @@ public class Enemy {
 	}
 	
 	//GETTER 
-	public int getpower() {
+	public int getPower() {
 		return this.power;
 	}
 	
 	//GETTER 
-	public int getspeed() {
+	public int getSpeed() {
 		return this.speed;
 	}
 	
@@ -51,8 +58,12 @@ public class Enemy {
 	}
 	
 	//SETTER 
-	public void setcurrentHealth(int ch) {
-		this.currentHealth = ch;	
+	public void setcurrentHealth(int health) {
+		  if (health >= 0) {
+			  currentHealth = health;
+		  } else {
+			  currentHealth = 0;
+		  }	
 	}
 	
 	//SETTER 
@@ -95,8 +106,11 @@ public class Enemy {
 		aMap.setTile(getLocation(), getToken());
 	}
 	
-	//SETTER
-	public void attack() {
+	public void attack(Player player) {
+		int playerHP = player.getHP();
+		  if (playerHP >= 0) {
+			  player.setHP(playerHP - getPower());
+		  }
 	}
 	
 	public String getName() {

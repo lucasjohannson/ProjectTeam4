@@ -59,6 +59,13 @@ public class Player{
 	  return items;
   }
   
+  public void attack(Enemy enemy) {
+	  int enemyHP = enemy.getcurrentHealth();
+	  if (enemyHP >= 0) {
+		  enemy.setcurrentHealth(enemyHP - getAttack());
+	  }
+  }
+  
   public void setLocation(Location location) {
 	  
 	  Location l1 = new Location(location);
