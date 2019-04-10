@@ -6,13 +6,6 @@ public class TextApp {
 	
 	Scanner scan = new Scanner (System.in);
 	private GameLogic logic = new GameLogic();
-	private Map map = new Map();
-	private Player player = new Player();
-	private GameData eventChecker = new GameData();
-	private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
-	private ArrayList<Collectible> collectibleList = new ArrayList<Collectible>();
-	private Location endpoint = new Location();
-	
 	
 	public void mainMenu() {
 		
@@ -55,12 +48,13 @@ public class TextApp {
 		String input1 = scan.next();
 		
 		try {
-			map.setGrid(input1);
+			logic.map.setGrid(input1);
 			System.out.println("The text file you entered was " + input1);
 			System.out.println();
 			System.out.println("Would you like to play using this map?");
-			map.printMap();
+			logic.map.printMap();
 			System.out.println("Press Y to play using this map or press N if you would like to specify another map");
+			System.out.println("Press Q to exit to the main menu");
 			String input2 = scan.next();
 			
 			switch(input2) {
@@ -71,17 +65,20 @@ public class TextApp {
 			case "N":
 				changeMap();
 				break;
+			case "Q":
+				mainMenu();
 			default:
-				System.out.println("Please choose either Y or N");
+				System.out.println("Please choose either Y, N or Q");
 				changeMap();
 			}
 		}
 		catch (FileNotFoundException fnfe){
-			System.out.println("File not Found!");
+			System.out.println("File not found!");
 			changeMap();
 		}
-	
-
+		catch (IndexOutOfBoundsException iobe) {
+			System.out.println("Please check that your map text file is properly formatted");
+		}
 	}
 	
 	public void initializeMap() {
@@ -90,18 +87,21 @@ public class TextApp {
 		String input = scan.next();
 		try {
 			logic.data.setInitialization(input);
-			logic.data.initializeMap(map);
+			logic.data.initializeMap(logic.map);
 			logic.player.setLocation(logic.data.getStartpoint());
 		} 
-		catch (FileNotFoundException e) {
-			System.out.println("The File could not be found");
+		catch (FileNotFoundException fnfe) {
+			System.out.println("The file could not be found");
+		}
+		catch (IndexOutOfBoundsException iobe) {
+			System.out.println("Please check that your initialization file is properly formatted");
 		}
 		mainMenu();
 	}
 	
 	public void play() {
 		
-		if(map.getGrid() == null) {
+		if(logic.map.getGrid() == null) {
 			System.out.println("Please load a map first!");
 			mainMenu();
 		}
@@ -109,7 +109,7 @@ public class TextApp {
 		boolean loop = true;
 		
 		while(loop) {
-			map.printMap();
+			logic.map.printMap();
 			System.out.println();
 			System.out.println("Which direction would you like to move?:");
 			System.out.println();
@@ -125,49 +125,45 @@ public class TextApp {
 				
 				case "N":
 
-					if(map.isValidMove(player, player.getLocation(), Direction.NORTH)) {
-						map.move(player.getLocation(), Direction.NORTH);
-						player.setLocation(player.getLocation().getNorth());
-						player.setDirection(Direction.NORTH);
-						map.printMap();	
-						checkEvent(player.getLocation());
-					} else {
+					try {
+						logic.moveNorth();
+						logic.map.printMap();	
+						checkEvent(logic.player.getLocation());
+					} 
+					catch (IndexOutOfBoundsException iobe) {
 						System.out.println("This is not a valid move!");
 						System.out.println();
 					}
 					break;
 				case "E":
-					if(map.isValidMove(player, player.getLocation(), Direction.EAST)) {
-						map.move(player.getLocation(), Direction.EAST);
-						player.setLocation(player.getLocation().getEast());
-						player.setDirection(Direction.EAST);
-						map.printMap();	
-						checkEvent(player.getLocation());
-					} else {
+					try {
+						logic.moveEast();
+						logic.map.printMap();	
+						checkEvent(logic.player.getLocation());
+					} 
+					catch (IndexOutOfBoundsException iobe) {
 						System.out.println("This is not a valid move!");
 						System.out.println();
 					}
 					break;
 				case "S":
-					if(map.isValidMove(player, player.getLocation(), Direction.SOUTH)) {
-						map.move(player.getLocation(), Direction.SOUTH);
-						player.setLocation(player.getLocation().getSouth());
-						player.setDirection(Direction.SOUTH);
-						map.printMap();	
-						checkEvent(player.getLocation());
-					} else {
+					try {
+						logic.moveSouth();
+						logic.map.printMap();	
+						checkEvent(logic.player.getLocation());
+					} 
+					catch (IndexOutOfBoundsException iobe) {
 						System.out.println("This is not a valid move!");
 						System.out.println();
 					}
 					break;
 				case "W":
-					if(map.isValidMove(player, player.getLocation(), Direction.WEST)) {
-						map.move(player.getLocation(), Direction.WEST);
-						player.setLocation(player.getLocation().getWest());
-						player.setDirection(Direction.WEST);
-						map.printMap();	
-						checkEvent(player.getLocation());
-					} else {
+					try {
+						logic.moveWest();
+						logic.map.printMap();	
+						checkEvent(logic.player.getLocation());
+					} 
+					catch (IndexOutOfBoundsException iobe) {
 						System.out.println("This is not a valid move!");
 						System.out.println();
 					}
@@ -187,15 +183,15 @@ public class TextApp {
 	
 	public void inventory() {
 		
-		if(player.getItems().size() == 0) {
+		if(logic.player.getItems().size() == 0) {
 			System.out.println("You currently have no items!");
 		} else {
 			
 			boolean loop = true;
 			
 			while(loop) {
-				for(int i = 0; i < player.getItems().size();) {
-					Collectible currentItem = player.getItems().get(i);
+				for(int i = 0; i < logic.player.getItems().size();) {
+					Collectible currentItem = logic.player.getItems().get(i);
 					System.out.println(currentItem.getName());
 					System.out.println("Would you like to use this item?");
 					System.out.println("Press Y to use this item or press N to go to the next item");
@@ -203,14 +199,14 @@ public class TextApp {
 					String input = scan.next();
 					switch(input) {
 					case "Y": 
-						currentItem.useItem(player);
+						currentItem.useItem(logic.player);
 						System.out.println(currentItem.toString());
-						player.getItems().remove(currentItem);
+						logic.player.getItems().remove(currentItem);
 						play();
 						break;
 					case "N":
 						i++;
-						if(i == player.getItems().size()) {
+						if(i == logic.player.getItems().size()) {
 							System.out.println("No more items in inventory");
 							loop = false;
 							play();
@@ -232,66 +228,71 @@ public class TextApp {
 		
 		if(logic.checkCompletion(location)) {
 			System.out.println("You win!");
+			System.out.println("Press any key to return to the main menu");
+			String input1 = scan.next();
+			
+			switch(input1) {
+			default:
+				mainMenu();
+			}
 		}
 		if(logic.checkEnemy(location)) {
+			System.out.println();
+			System.out.println("You have encountered an enemy!");
 			battle();
 		}
 		if(logic.checkItem(location)) {
-			System.out.println("You have obtained a(n) " + logic.player.getItems().get(logic.player.getItems().size()).getName());
+			ArrayList<Collectible> items = logic.player.getItems();
+			System.out.println("You have obtained a(n) " + items.get(items.size()-1).getName());
 		}
 	}
 	
 	public void battle() {
 		
+		Enemy toBattle = logic.getEnemy(logic.player.getLocation());
 		
-	}
-	
-	public void checkItem(Location location) {
-		if(collectibleList.size() > 0) {
-			for(int i = 0; i < collectibleList.size();) {
-				if(collectibleList.get(i).getLocation().isEqual(location)) {
-					player.getItems().add(collectibleList.get(i));
-					System.out.println("You have acquired a " + collectibleList.get(i).getName());
-					collectibleList.remove(i);
-				} else {
-					i++;
-				}
+		while(logic.player.getHP() > 0 && toBattle.getcurrentHealth() > 0) {
+		System.out.println(toBattle.getName() + " HP:" + toBattle.getcurrentHealth()+ "/" + toBattle.getmaxCorHealth());
+		System.out.println("Your HP:" + logic.player.getHP() + "/" + logic.player.getMaxHP());
+		
+		System.out.println("Select A to attack or press R to run!");
+		String input = scan.next();
+		switch(input) {
+		case "A":
+			logic.player.attack(toBattle);
+			System.out.println("You attacked " + toBattle.getName() + " for " + logic.player.getAttack() + " damage!");
+			if(toBattle.getcurrentHealth() >= 0) {
+				toBattle.attack(logic.player);
+				System.out.println(toBattle.getName() + " attacked you for " + toBattle.getPower() + " damage!");
 			}
-		} else {
-			
+			break;
+		case "R":
+			System.out.println("You can't run!");
+			toBattle.attack(logic.player);
+			System.out.println(toBattle.getName() + " attacked you for " + toBattle.getPower() + " damage!");
+		default:
+			System.out.println("Please select A or R");
 		}
-	}
-	
-	public void checkCompletion(Location location) {
-		if(location.isEqual(endpoint)) {
-			System.out.println("You win!");
-			System.out.println("Would you like to play another map? Y/N");
-			String input1 = scan.next();
-			
-			switch(input1) {
-			case "Y":
-				changeMap();
-				break;
-			case "N":
-				mainMenu();
-				break;
-			default:
-				System.out.println("Invalid input");
-			}
 		}
-	}
-	
-	public void setEndpoint(int x, int y) {
-		endpoint.setX(x);
-		endpoint.setY(y);
-	}
-	
-	public Player getPlayer() {
-		return player;
-	}
-	
-	public void addItem(Collectible item) {
-		collectibleList.add(item);
+		if(logic.player.getHP() == 0) {
+			System.out.println("You have died!");
+			System.out.println();
+			System.out.println("*************************");
+			System.out.println("*                       *");
+			System.out.println("*       GAME OVER       *");
+			System.out.println("*                       *");
+			System.out.println("*************************");
+			logic.player.setLocation(logic.data.getStartpoint());
+			logic.player.setHP(logic.player.getMaxHP());
+			logic.map.setTile(logic.data.getStartpoint(), 'P');
+			logic.map.setTile(toBattle.getLocation(), 'E');
+			mainMenu();
+		}
+		if(toBattle.getcurrentHealth() == 0) {
+			System.out.println("You have defeated the enemy " + toBattle.getName());
+			logic.data.getEnemyList().remove(toBattle);
+			play();
+		}
 	}
 	
 	public static void main(String[] args) {

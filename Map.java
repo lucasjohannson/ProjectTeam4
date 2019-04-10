@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Map {
 	
 	private char[][] grid;
-	private char[][] originalGrid;
+	private char[][] baseGrid;
 	
 	public boolean isValidMove(Player player, Location location, Direction direction) {
 		
@@ -81,7 +81,7 @@ public class Map {
 	}
 	
 	public char getOriginalTile(Location location) {
-		return originalGrid[location.getY()][location.getX()];
+		return baseGrid[location.getY()][location.getX()];
 	}
 	
 	public void setTile(Location location, char element) {
@@ -90,12 +90,14 @@ public class Map {
 	
 	public char[][] copyGrid(char[][] aGrid) {
 		
-		int gridLength = aGrid.length;
-		char[][] copy = new char[gridLength][aGrid[0].length];
-		for(int i = 0; i < gridLength; i++) {
-			System.arraycopy(aGrid[i], 0, copy[0], 0, aGrid[0].length);
+		int gridLength = aGrid[0].length;
+		int gridHeight = aGrid.length;
+		char[][] copy = new char[gridHeight][gridLength];
+		for(int i = 0; i < gridHeight; i++) {
+			for(int j = 0; j < gridLength; j++) {
+				copy[i][j] = aGrid[i][j];
+			}
 		}
-		
 		return copy;
 	}
 	
@@ -136,7 +138,7 @@ public class Map {
 					}
 				}
 				setGrid(fromText);
-				originalGrid = copyGrid(grid);
+				baseGrid = copyGrid(grid);
 				scan1.close();
 				scan2.close();
 		}
