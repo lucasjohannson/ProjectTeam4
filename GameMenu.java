@@ -1,4 +1,5 @@
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -8,11 +9,20 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javafx.application.*;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.*;
 import javafx.geometry.*;
 import javafx.scene.*;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -26,9 +36,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.*;
 
-	public class GameMenu extends Application{
+	public class GameMenu extends Application{	
 		
-		private Parent createContent() {
+		private GameLogic logic = new GameLogic();
+		Image grassTile = new Image("file:grass.png", 64, 64, true, false);
+		Image lavaTile = new Image("file:lava.png", 64, 64, true, false);
+		Image wallTile = new Image("file:wall.png", 64, 64, true, false);
+		Image waterTile = new Image("file:water.png", 64, 64, true, false);
+		
+		public void start(Stage primaryStage) throws Exception{
 			Pane root = new Pane();
 			
 			root.setPrefSize(1050, 600);
@@ -47,24 +63,63 @@ import javafx.scene.text.*;
 			title.setTranslateX(215);
 			title.setTranslateY(240);
 			
-			MenuBox vbox = new MenuBox(
-					new MenuItem("PLAY"),
-					new MenuItem("LOAD MAP"),
-					new MenuItem("OPTIONS"),
-					new MenuItem("EXIT"));
+			MenuItem play = new MenuItem("PLAY");
+			MenuItem load = new MenuItem("LOAD MAP");
+			MenuItem options = new MenuItem("OPTIONS");
+			MenuItem exit = new MenuItem("EXIT");
+			
+			MenuBox vbox = new MenuBox(play, load, options, exit);
 			vbox.setTranslateX(390);
 			vbox.setTranslateY(320);
 			
 			root.getChildren().addAll(title,vbox);
 			
-			return root;
-			
-		}
-		@Override
-		public void start(Stage primaryStage) throws Exception{
-			Scene scene = new Scene(createContent());
+			Scene scene = new Scene(root);
 			primaryStage.setTitle("ANIMATION GAME");
 			primaryStage.setScene(scene);
+			
+			VBox mainGUI = new VBox();
+			final Canvas canvas = new Canvas();
+			GraphicsContext gc = canvas.getGraphicsContext2D();
+			gc.drawImage(grassTile, 0, 0);
+			Scene gameDisplay = new Scene(mainGUI, mainGUI.getPrefHeight(), mainGUI.getPrefWidth());
+			mainGUI.getChildren().add(canvas);
+			
+			VBox rootPopup = new VBox(10);
+			rootPopup.setPadding(new Insets(10));
+			HBox innerBox1 = new HBox(5);
+			Label l3 = new Label("Enter map name:");
+			TextField tf1 = new TextField();
+			innerBox1.setAlignment(Pos.CENTER);
+			HBox innerBox2 = new HBox(5);
+			Button b1 = new Button("Ok");
+			b1.setOnAction(e -> {
+				try {
+					logic.map.setGrid(tf1.getCharacters().toString());
+					drawMap(logic.map.getBaseGrid(), canvas);
+					primaryStage.setScene(gameDisplay);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				
+				
+			});
+			Button b2 = new Button("Cancel");
+			b2.setOnAction(e -> primaryStage.setScene(scene));
+			innerBox2.setAlignment(Pos.CENTER);
+			rootPopup.getChildren().add(tf1);
+			rootPopup.getChildren().add(innerBox1);
+			rootPopup.getChildren().add(innerBox2);
+			innerBox1.getChildren().add(l3);
+			innerBox1.getChildren().add(tf1);
+			innerBox2.getChildren().add(b1);
+			innerBox2.getChildren().add(b2);
+			rootPopup.setAlignment(Pos.CENTER);
+			Scene loadMap = new Scene(rootPopup, 300, 100, Color.LIGHTGREY);
+			load.setOnMouseClicked(e -> primaryStage.setScene(loadMap));
+			play.setOnMouseClicked(e -> primaryStage.setScene(gameDisplay));
+			
+			
 			primaryStage.show();
 		}
 		
@@ -131,6 +186,7 @@ import javafx.scene.text.*;
 				setOnMousePressed(event -> {
 					bg.setFill(Color.DARKVIOLET);
 					
+					
 				});
 				
 				setOnMouseReleased(event -> {
@@ -139,7 +195,32 @@ import javafx.scene.text.*;
 				
 				}
 			}
-
+	
+			public void drawMap(char[][] aGrid, Canvas canvas) {
+				canvas.setHeight(aGrid.length * 64);
+				canvas.setWidth(aGrid[0].length * 64);
+				GraphicsContext gc = canvas.getGraphicsContext2D();
+				for(int i = 0; i < aGrid.length; i++) {
+					for (int j = 0; j < aGrid[0].length; j++) {
+						switch(aGrid[i][j]) {
+						case '.':
+							gc.drawImage(grassTile, j*64, i*64);
+							break;
+						case '~':
+							gc.drawImage(waterTile, j*64, i*64);
+							break;
+						case '#':
+							gc.drawImage(wallTile, j*64, i*64);
+							break;
+						case '^':
+							gc.drawImage(lavaTile, j*64, i*64);
+							break;
+						default:
+							gc.drawImage(grassTile, j*64, i*64);
+						}
+					}
+				}
+			}
 		public static void main(String[] args) {
 			
 			launch(args);
