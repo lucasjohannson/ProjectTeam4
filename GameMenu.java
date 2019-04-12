@@ -65,10 +65,9 @@ import javafx.scene.text.*;
 			
 			MenuItem play = new MenuItem("PLAY");
 			MenuItem load = new MenuItem("LOAD MAP");
-			MenuItem options = new MenuItem("OPTIONS");
 			MenuItem exit = new MenuItem("EXIT");
 			
-			MenuBox vbox = new MenuBox(play, load, options, exit);
+			MenuBox vbox = new MenuBox(play, load, exit);
 			vbox.setTranslateX(390);
 			vbox.setTranslateY(320);
 			
@@ -100,9 +99,7 @@ import javafx.scene.text.*;
 					primaryStage.setScene(gameDisplay);
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
-				}
-				
-				
+				}	
 			});
 			Button b2 = new Button("Cancel");
 			b2.setOnAction(e -> primaryStage.setScene(scene));
@@ -118,7 +115,7 @@ import javafx.scene.text.*;
 			Scene loadMap = new Scene(rootPopup, 300, 100, Color.LIGHTGREY);
 			load.setOnMouseClicked(e -> primaryStage.setScene(loadMap));
 			play.setOnMouseClicked(e -> primaryStage.setScene(gameDisplay));
-			
+			exit.setOnMouseClicked(e -> primaryStage.close());
 			
 			primaryStage.show();
 		}
