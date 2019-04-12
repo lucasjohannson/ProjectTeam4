@@ -1,0 +1,219 @@
+
+	import java.io.IOException;
+
+
+
+
+	import java.io.InputStream;
+	import java.nio.*;
+	import java.nio.file.Files;
+	import java.nio.file.Paths;
+
+	import javafx.application.*;
+	import javafx.stage.*;
+	import javafx.geometry.*;
+	import javafx.scene.*;
+	import javafx.scene.canvas.GraphicsContext;
+	import javafx.scene.image.Image;
+	import javafx.scene.image.ImageView;
+	import javafx.scene.layout.Pane;
+	import javafx.scene.layout.StackPane;
+	import javafx.scene.layout.VBox;
+	import javafx.scene.paint.Color;
+	import javafx.scene.paint.CycleMethod;
+	import javafx.scene.paint.LinearGradient;
+	import javafx.scene.paint.Stop;
+	import javafx.scene.shape.Line;
+	import javafx.scene.shape.Polygon;
+	import javafx.scene.shape.Rectangle;
+import javafx.scene.text.*;
+
+	public class Battle extends Application{
+		
+		int enemyHealth = Enemy.getCurrentHealth();
+		int playerHealth = Player.getCurrentHealth();
+
+		
+		
+		private static class MenuItem extends StackPane{
+			public MenuItem(String name) {
+				LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] { 
+					new Stop(0, Color.DARKBLUE),
+					new Stop(0.1, Color.BLACK),
+					new Stop(0.9, Color.BLACK),
+					new Stop(1, Color.DARKBLUE)
+					
+				});
+			
+				
+				Rectangle bg = new Rectangle(200,30);
+				bg.setOpacity(0.4);
+				
+				Text text = new Text(name);
+				text.setFill(Color.WHITE);
+				text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD,20));
+				
+				
+				
+				setAlignment(Pos.CENTER);
+				getChildren().addAll(bg, text);
+				setOnMouseEntered(event -> {
+					bg.setFill(gradient);
+					
+					text.setFill(Color.BLACK);
+					
+					
+					 
+					
+					
+				});
+				
+				setOnMouseExited(event -> {
+					
+					Title title = new Title ("hit");
+					title.setTranslateX(50);
+					title.setTranslateY(200);
+				
+					
+					
+				});
+				setOnMousePressed(event -> {
+					
+					bg.setFill(Color.GREEN);
+					
+					Rectangle rec = new Rectangle(-400,5,100,40);
+					Rectangle rec1 = new Rectangle(-400,5,100,40);
+					Rectangle rec3 = new Rectangle(400,5,100,40);
+					Rectangle rec4 = new Rectangle(400,5,100,40);
+					
+					rec.setTranslateX(-366);
+					rec.setTranslateY(-361);
+					rec.setWidth(200);
+					rec.setHeight(40);
+					
+					
+					rec1.setTranslateX(-366);
+					rec1.setTranslateY(-361);
+					rec1.setWidth(enemyHealth);
+					rec1.setHeight(40);
+					
+					
+					rec.setFill(Color.LIGHTGREEN);
+					rec1.setFill(Color.RED);
+
+					
+					
+					getChildren().addAll(rec,rec1);
+					
+					
+					
+				
+					
+							
+				});
+				
+				setOnMouseReleased(event -> {
+					bg.setFill(gradient);
+				});
+				
+				}
+			}
+
+		
+		
+		
+		private Parent createContent() {
+			Pane root = new Pane();
+			
+			root.setPrefSize(1050, 600);
+			
+			try(InputStream is = Files.newInputStream(Paths.get("galaxy.png"))){
+				ImageView img = new ImageView(new Image(is));
+				img.setFitWidth(1050);
+				img.setFitHeight(600);
+				
+				root.getChildren().addAll(img);
+			}
+			catch(IOException e) {
+				System.out.println("Couldn't load image");
+			}
+			
+			
+			
+			MenuBox vbox = new MenuBox(
+					new MenuItem("Attack"),	
+					new MenuItem("Block"));
+			vbox.setTranslateX(400);
+			vbox.setTranslateY(400);
+		
+	        
+			
+	        Rectangle rec = new Rectangle(40,40,150,40);
+	        Rectangle recUnd = new Rectangle(40,40,200,40);
+	        Rectangle rec1 = new Rectangle(810,40,150,40);
+	        Rectangle rec1Und = new Rectangle(810,40,200,40);
+	        
+	        
+	        rec.setFill(Color.LIGHTGREEN);
+	        recUnd.setFill(Color.RED);
+	        rec1.setFill(Color.LIGHTGREEN);
+	        rec1Und.setFill(Color.RED);
+	        
+	        
+	        
+			root.getChildren().addAll(vbox); //,recUnd,rec1Und,rec,rec1
+			
+			return root;
+			
+		}
+		
+	
+
+
+		@Override
+		public void start(Stage primaryStage) throws Exception{
+			Scene scene = new Scene(createContent());
+			primaryStage.setTitle("Battle Scene");
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		}
+		
+		private static class Title extends StackPane{
+			public Title(String name) {
+				
+				Text text = new Text(name);
+				text.setFill(Color.BLACK);
+				text.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 50));
+				
+				setAlignment(Pos.CENTER);
+				getChildren().addAll(text);
+			}
+		}
+	
+		
+		private static class MenuBox extends VBox{
+			public MenuBox(MenuItem...items) {
+				getChildren().add(createSeperator());
+				
+				for(MenuItem item : items) {
+					getChildren().addAll(item, createSeperator());
+				}
+			}
+			
+			private Line createSeperator() {
+				Line sep = new Line();
+				sep.setEndX(210);
+				sep.setStroke(Color.WHITE);
+				return sep;
+			}
+			
+		}
+		
+
+		
+		public static void main(String[] args) {
+			
+			launch(args);
+		}
+	}
+
