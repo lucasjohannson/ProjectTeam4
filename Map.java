@@ -138,7 +138,9 @@ public class Map {
 		int gridLength = aGrid.length;
 		char[][] copy = new char[gridLength][aGrid[0].length];
 		for(int i = 0; i < gridLength; i++) {
-			System.arraycopy(aGrid[i], 0, copy[0], 0, aGrid[0].length);
+			for(int j = 0; j<grid[0].length; j++) {
+				copy[i][j] = aGrid[i][j];
+			}
 		}
 		
 		return copy;
