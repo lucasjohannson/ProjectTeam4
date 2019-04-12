@@ -43,6 +43,10 @@ import javafx.scene.text.*;
 		Image lavaTile = new Image("file:lava.png", 64, 64, true, false);
 		Image wallTile = new Image("file:wall.png", 64, 64, true, false);
 		Image waterTile = new Image("file:water.png", 64, 64, true, false);
+		Image chest = new Image("file:chest.png", 64, 64, true, false);
+		Image playerChar = new Image("file:playerChar.png", 64, 64, true, false);
+		Image enemyChar = new Image("file:enemyChar.png", 64, 64, true, false);
+		Image portal = new Image("file:portal.png", 64, 64, true, false);
 		
 		public void start(Stage primaryStage) throws Exception{
 			Pane root = new Pane();
@@ -77,6 +81,27 @@ import javafx.scene.text.*;
 			primaryStage.setTitle("ANIMATION GAME");
 			primaryStage.setScene(scene);
 			
+			VBox popup2 = new VBox(10);
+			popup2.setPadding(new Insets(10));
+			HBox innerBox3 = new HBox(5);
+			HBox innerBox4 = new HBox(5);
+			Label l4 = new Label("Enter name of initialization file:");
+			TextField tf2 = new TextField();
+			innerBox3.setAlignment(Pos.CENTER);
+			innerBox4.setAlignment(Pos.CENTER);
+			Button b3 = new Button("Ok");
+			Button b4 = new Button("Cancel");
+			b4.setOnAction(e -> primaryStage.setScene(scene));
+			popup2.getChildren().add(innerBox3);
+			popup2.getChildren().add(innerBox4);
+			innerBox3.getChildren().add(l4);
+			innerBox3.getChildren().add(tf2);
+			innerBox4.getChildren().add(b3);
+			innerBox4.getChildren().add(b4);
+			
+			popup2.setAlignment(Pos.CENTER);
+			Scene loadIni = new Scene(popup2, 400, 100, Color.LIGHTGREY);
+			
 			VBox mainGUI = new VBox();
 			final Canvas canvas = new Canvas();
 			logic.map.setGrid("map1.txt");
@@ -92,19 +117,34 @@ import javafx.scene.text.*;
 			innerBox1.setAlignment(Pos.CENTER);
 			HBox innerBox2 = new HBox(5);
 			Button b1 = new Button("Ok");
+			
 			b1.setOnAction(e -> {
 				try {
 					logic.map.setGrid(tf1.getCharacters().toString());
 					drawMap(logic.map.getBaseGrid(), canvas);
-					primaryStage.setScene(gameDisplay);
+					primaryStage.setScene(loadIni);
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}	
 			});
+			
 			Button b2 = new Button("Cancel");
 			b2.setOnAction(e -> primaryStage.setScene(scene));
+			
+			b3.setOnAction(e -> {
+				try {
+					logic.getGameData().setInitialization(tf2.getCharacters().toString());
+					logic.getGameData().initializeMap(logic.map);
+					logic.getGameData().initializePlayer(logic.player);
+					drawInitialization(logic.map.getGrid(), canvas);
+					primaryStage.setScene(gameDisplay);
+				}
+				catch(FileNotFoundException e2) {
+					e2.printStackTrace();
+				}
+			});
+			
 			innerBox2.setAlignment(Pos.CENTER);
-			rootPopup.getChildren().add(tf1);
 			rootPopup.getChildren().add(innerBox1);
 			rootPopup.getChildren().add(innerBox2);
 			innerBox1.getChildren().add(l3);
@@ -113,6 +153,7 @@ import javafx.scene.text.*;
 			innerBox2.getChildren().add(b2);
 			rootPopup.setAlignment(Pos.CENTER);
 			Scene loadMap = new Scene(rootPopup, 300, 100, Color.LIGHTGREY);
+			
 			load.setOnMouseClicked(e -> primaryStage.setScene(loadMap));
 			play.setOnMouseClicked(e -> primaryStage.setScene(gameDisplay));
 			exit.setOnMouseClicked(e -> primaryStage.close());
@@ -218,6 +259,30 @@ import javafx.scene.text.*;
 					}
 				}
 			}
+		
+			public void drawInitialization(char[][] aGrid, Canvas canvas) {
+				GraphicsContext gc = canvas.getGraphicsContext2D();
+				for(int i = 0; i < aGrid.length; i++) {
+					for (int j = 0; j < aGrid[0].length; j++) {
+						switch(aGrid[i][j]) {
+						case 'E':
+							gc.drawImage(enemyChar, j*64, i*64);
+							break;
+						case 'o':
+							gc.drawImage(chest, j*64, i*64);
+							break;
+						case 'P':
+							gc.drawImage(playerChar, j*64, i*64);
+							break;
+						case'@':
+							gc.drawImage(portal, j*64, i*64);
+						default:
+							;
+						}
+					}
+				}
+			}
+			
 		public static void main(String[] args) {
 			
 			launch(args);
