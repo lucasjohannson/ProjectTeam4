@@ -97,6 +97,13 @@ public class Player{
 	  }
   }
   
+  public void setMaxHP(int max) {
+	  if(max > 0) {
+		  maxHP = max;
+		  currentHP = max;
+	  }
+  }
+  
   public void addTile(char tile) {
 	  moveableTile.add(tile);
   }	
