@@ -12,7 +12,7 @@ public class GameLogic {
 	/**
 	 * Moves the Player North
 	 */
-	public void moveNorth() {
+	public void moveNorth throws IndexOutOfBoundsException() {
 		if(map.isValidMove(player, player.getLocation(), Direction.NORTH)) {
 			map.move(player.getLocation(), Direction.NORTH);
 			player.setLocation(player.getLocation().getNorth());
@@ -23,7 +23,7 @@ public class GameLogic {
 	/**
 	 * Moves the Player East
 	 */
-	public void moveEast() {
+	public void moveEast throws IndexOutOfBoundsException() {
 		if(map.isValidMove(player, player.getLocation(), Direction.EAST)) {
 			map.move(player.getLocation(), Direction.EAST);
 			player.setLocation(player.getLocation().getEast());
@@ -34,7 +34,7 @@ public class GameLogic {
 	/**
 	 * Moves the Player West
 	 */
-	public void moveWest() {
+	public void moveWest throws IndexOutOfBoundsException() {
 		if(map.isValidMove(player, player.getLocation(), Direction.WEST)) {
 			map.move(player.getLocation(), Direction.WEST);
 			player.setLocation(player.getLocation().getWest());
@@ -45,7 +45,7 @@ public class GameLogic {
 	/**
 	 * Moves the Player South
 	 */
-	public void moveSouth() {
+	public void moveSouth throws IndexOutOfBoundsException() {
 		if(map.isValidMove(player, player.getLocation(), Direction.SOUTH)) {
 			map.move(player.getLocation(), Direction.SOUTH);
 			player.setLocation(player.getLocation().getSouth());
@@ -65,8 +65,9 @@ public class GameLogic {
 			for(int i = 0; i < data.getItemList().size();) {
 				if(data.getItemList().get(i).getLocation().isEqual(location)) {
 					player.getItems().add(data.getItemList().get(i));
-					data.getItemList().remove(i);
 					hasItem = true;
+					data.getItemList().remove(i);
+					return hasItem;
 				} else {
 					i++;
 				}
@@ -87,6 +88,7 @@ public class GameLogic {
 			for(int i = 0; i < data.getEnemyList().size();) {
 				if(data.getEnemyList().get(i).getLocation().isEqual(location)) {
 					hasEnemy = true;
+					return hasEnemy;
 				} else {
 					i++;
 				}
