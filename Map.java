@@ -5,13 +5,13 @@ import java.util.Scanner;
  * A class representing a map on which a player character can move.
  * Has a 2d char array grid which represents the final grid the player can move on,
  * which includes items, enemies as well as the start and endpoints.
- * Also has a 2d char array originalGrid, which represents the map with only the base
+ * Also has a 2d char array baseGrid, which represents the map with only the base
  * tiles.
  */
 public class Map {
 	
 	private char[][] grid;
-	private char[][] originalGrid;
+	private char[][] baseGrid;
 	
 	/**
 	 * Checks whether a given move is valid
@@ -116,7 +116,7 @@ public class Map {
 	 * @return the char representing the base tile at the given Location
 	 */
 	public char getOriginalTile(Location location) {
-		return originalGrid[location.getY()][location.getX()];
+		return baseGrid[location.getY()][location.getX()];
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class Map {
 					}
 				}
 				setGrid(fromText);
-				originalGrid = copyGrid(grid);
+				baseGrid = copyGrid(grid);
 				scan1.close();
 				scan2.close();
 		}
