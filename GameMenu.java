@@ -80,8 +80,8 @@ import javafx.scene.text.*;
 			
 			VBox mainGUI = new VBox();
 			final Canvas canvas = new Canvas();
-			GraphicsContext gc = canvas.getGraphicsContext2D();
-			gc.drawImage(grassTile, 0, 0);
+			logic.map.setGrid("map1.txt");
+			drawMap(logic.map.getBaseGrid(), canvas);
 			Scene gameDisplay = new Scene(mainGUI, mainGUI.getPrefHeight(), mainGUI.getPrefWidth());
 			mainGUI.getChildren().add(canvas);
 			
