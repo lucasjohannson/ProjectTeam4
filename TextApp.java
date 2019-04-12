@@ -2,11 +2,18 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * A text application for the game that can be run on console. Contains GameLogic through 
+ * which the game runs, and a Scanner for user input
+ */
 public class TextApp {
 	
 	Scanner scan = new Scanner (System.in);
 	private GameLogic logic = new GameLogic();
 	
+	/**
+	 * A method which creates the main menu and its interactions in the console
+	 */
 	public void mainMenu() {
 		
 		boolean loop = true;
@@ -41,6 +48,9 @@ public class TextApp {
 		} while(loop == true);
 	}
 	
+	/**
+	 * Creates the menu where the user can specify text file inputs to load maps
+	 */
 	public void changeMap() {
 		
 		System.out.println("Please enter the name of the text file which contains your desired map:");
@@ -81,6 +91,9 @@ public class TextApp {
 		}
 	}
 	
+	/**
+	 * Creates the menu where the user can specify an initialization file for a map
+	 */
 	public void initializeMap() {
 		System.out.println();
 		System.out.println("Please enter the name of the initialization file for this map:");
@@ -88,7 +101,7 @@ public class TextApp {
 		try {
 			logic.data.setInitialization(input);
 			logic.data.initializeMap(logic.map);
-			logic.player.setLocation(logic.data.getStartpoint());
+			logic.data.initializePlayer(logic.player);
 		} 
 		catch (FileNotFoundException fnfe) {
 			System.out.println("The file could not be found");
@@ -99,11 +112,21 @@ public class TextApp {
 		mainMenu();
 	}
 	
+	/**
+	 * Creates the main loop through which the game is played
+	 */
 	public void play() {
 		
 		if(logic.map.getGrid() == null) {
-			System.out.println("Please load a map first!");
-			mainMenu();
+			try {
+				logic.map.setGrid("map1.txt");
+				logic.data.setInitialization("ini1.txt");
+				logic.data.initializeMap(logic.map);
+				logic.data.initializePlayer(logic.player);;
+			} 
+			catch (FileNotFoundException fnfe) {
+				System.out.println("Please check that you have the default files (map1.txt and ini1.txt)");
+			}
 		}
 		
 		boolean loop = true;
@@ -181,6 +204,9 @@ public class TextApp {
 		}	
 	}
 	
+	/**
+	 * Creates the outputs when a player accesses their inventory
+	 */
 	public void inventory() {
 		
 		if(logic.player.getItems().size() == 0) {
@@ -224,9 +250,14 @@ public class TextApp {
 		}
 	}
 	
+	/**
+	 * Checks if an event occurs at the given Location, then gives a text output
+	 * based on the type of event if an event has occurred
+	 * @param location the Location to be checked for an event
+	 */
 	public void checkEvent(Location location) {
 		
-		if(logic.checkCompletion(location)) {
+		if(logic.checkCompletion()) {
 			System.out.println("You win!");
 			System.out.println("Press any key to return to the main menu");
 			String input1 = scan.next();
@@ -247,6 +278,9 @@ public class TextApp {
 		}
 	}
 	
+	/**
+	 * The battle UI for the text application
+	 */
 	public void battle() {
 		
 		Enemy toBattle = logic.getEnemy(logic.player.getLocation());
