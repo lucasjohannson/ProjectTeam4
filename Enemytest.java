@@ -1,4 +1,4 @@
-package teamproj;
+https://coderanch.com/t/515213/engineering/JUnit-tests-Getters-Setters
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,31 +60,31 @@ public class Enemytest {
 		@Test
 		public void testgetmaxHealth(){
 			Enemy card =  new Enemy(null, 0, 0, 0, 0);
-			card.setmaxCorHealth(50);
-			assertTrue(card.getmaxCorHealth() == 50);
+			card.setmaxCorHealth(100);
+			assertTrue(card.getmaxCorHealth() == 100);
 		}
 				
 		// TEST ENEMY MAX HEALTH SETTER 
 				@Test
 			    public void testsetMaxHealth(){
 			        Enemy card = new Enemy(null, 0, 0, 0, 0);
-			        card.setmaxCorHealth(50);
-			        assertTrue(card.getmaxCorHealth() == 50);
+			        card.setmaxCorHealth(100);
+			        assertTrue(card.getmaxCorHealth() == 100);
 			    }
 				
 		//TEST ENEMY CURRENT HEALTH GETTER
 		@Test
 		public void testgetCurrentHealth(){
 			Enemy card =  new Enemy(null, 0, 0, 0, 0);
-			card.setcurrentHealth(50);
-			assertTrue(card.getcurrentHealth() == 50);
+			card.setcurrentHealth(100);
+			assertTrue(card.getcurrentHealth() == 100);
 			    }
 		
 		//TEST ENEMY CURRENT HEALTH SETTER 
 		@Test
 	    public void testCurrentHealthSetter(){
 	        Enemy card = new Enemy(null, 0, 0, 0, 0);
-	        card.setcurrentHealth(50);
-	        assertTrue(card.getcurrentHealth() == 50);
+	        card.setcurrentHealth(100);
+	        assertTrue(card.getcurrentHealth() == 100);
 	    }
 }
