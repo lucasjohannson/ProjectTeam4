@@ -109,7 +109,7 @@ Example:
 
 o,p,Red Potion,2,3,20
 
-Creates a Potion named "Red Potion" which restores 20 hp at location (2,2) on the map. (0,0) is the top left corner of the map.
+Creates a Potion named "Red Potion" which restores 20 hp at location (2,3) on the map. (0,0) is the top left corner of the map.
 ********************************************************************************************************************************
 
 A weapon:
@@ -167,9 +167,9 @@ P,starting xcoordinate,starting ycoordinate, attack, max health
 
 Example:
 
-P,1,1,3,50
+P,1,2,3,50
 
-Sets the player's attack to 3, max health to 50 and the starting location of the player to (1,1). (0,0)is the top left corner of the map.
+Sets the player's attack to 3, max health to 50 and the starting location of the player to (1,2). (0,0)is the top left corner of the map.
 
 Note: if there are multiple entries for the player in the initialization file, only the last one will be used (the one furthest down)
 ********************************************************************************************************************************
@@ -184,6 +184,6 @@ Identifier: N/A
 
 Example:
 
-@,9,9
+@,9,12
 
-Sets the endpoint of the map at location (9,9). (0,0) is the top left corner of the map.
+Sets the endpoint of the map at location (9,12). (0,0) is the top left corner of the map.
