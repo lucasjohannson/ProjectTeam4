@@ -65,10 +65,10 @@ Note: Each line in the text file must contain the same number of characters or t
 
 The characters which the game will recognize are:
 
-# - for walls
-. - for basic moveable terrain (grass)
-~ - for water
-^ - for lava
+"#" - for walls
+"." - for basic moveable terrain (grass)
+"~" - for water
+"^" - for lava
 
 Place the text file in the directory directly above the game files for them to load properly.
 
