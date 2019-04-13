@@ -110,7 +110,7 @@ Example:
 o,p,Red Potion,2,3,20
 
 Creates a Potion named "Red Potion" which restores 20 hp at location (2,2) on the map. (0,0) is the top left corner of the map.
-
+********************************************************************************************************************************
 
 A weapon:
 
@@ -125,7 +125,7 @@ Example:
 o,w,Sword,10,5,2
 
 Creates a weapon named "Sword" which increases attack by 2 at (10,5) on the map. (0,0) is the top left corner of the map.
-
+********************************************************************************************************************************
 
 A shoe:
 
@@ -140,7 +140,7 @@ Example:
 o,s,Flipper,1,3,~
 
 Creates a shoe named "Flipper" which allows the player to walk on "~" (water) tiles at (1,3) on the map. (0,0) is the top left corner of the map.
-
+********************************************************************************************************************************
 
 An Enemy:
 
@@ -155,7 +155,7 @@ Example:
 E,Goblin,2,10,2,30
 
 Creates an enemy named "Goblin" with attack of 2 and max health of 30 at (2,10) on the map. (0,0) is the top left corner of the map.
-
+********************************************************************************************************************************
 
 The Player:
 
@@ -172,7 +172,7 @@ P,1,1,3,50
 Sets the player's attack to 3, max health to 50 and the starting location of the player to (1,1). (0,0)is the top left corner of the map.
 
 Note: if there are multiple entries for the player in the initialization file, only the last one will be used (the one furthest down)
-
+********************************************************************************************************************************
 
 The endpoint:
 
