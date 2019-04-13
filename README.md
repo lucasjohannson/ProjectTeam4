@@ -94,7 +94,7 @@ The first character in each line denotes which type of data it represents.
 
 "@" - represents the endpoint
 
-
+********************************************************************************************************************************
 A runthrough of which things can be initialized:
 
 A potion:
