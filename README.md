@@ -45,7 +45,7 @@ Enemies are represented by "E"
 
 Doors are represented by "D"
 
-
+********************************************************************************************************************************
 GUI VERSION:
 
 First compile files in console and then run GameMenu.java. On the main menu screen, there are 3 options: Play Game, Load Map and Exit.
@@ -76,7 +76,7 @@ The characters which the game will recognize are:
 
 Place the text file in the directory directly above the game files for them to load properly.
 
-
+********************************************************************************************************************************
 MAKING YOUR OWN INITIALIZATION FILES
 
 Initialization files detail enemy, item, player and endpoint data
