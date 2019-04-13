@@ -5,7 +5,7 @@ This project is an adventure game. Players must navigate a map and progress by p
 TO PLAY THE GAME:
 
 All files must be contained in the same directory, except for the map and initialization files the game asks for, which must be placed in the PARENT directory.
-
+********************************************************************************************************************************
 CONSOLE VERSION:
  
 First, compile the files in the console and then run TextApp.java to play the console version.
