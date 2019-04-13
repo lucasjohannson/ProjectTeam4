@@ -66,9 +66,13 @@ Note: Each line in the text file must contain the same number of characters or t
 The characters which the game will recognize are:
 
 "#" - for walls
+
 "." - for basic moveable terrain (grass)
+
 "~" - for water
+
 "^" - for lava
+
 
 Place the text file in the directory directly above the game files for them to load properly.
 
@@ -91,3 +95,7 @@ A runthrough of which things can be initialized:
 A potion:
 Restores health to the player when used
 Identifier: p
+o, p, xcoordinate, ycoordinate, health restored
+Example:
+o,p,2,3,20
+
