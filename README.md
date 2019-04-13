@@ -82,20 +82,108 @@ MAKING YOUR OWN INITIALIZATION FILES
 Initialization files detail enemy, item, player and endpoint data
 
 The game reads each line in a text file as a separate data entry, so make sure to only have one entry per line!
+Each argument in a line must be separated by a comma. Whitespace is ok but no other characters other than ones listed below will be recognizable by the game. Please ensure the initialization files are correct if you wish to ensure the game runs properly.
 
 The first character in each line denotes which type of data it represents.
 
 "o" - represents a collectible
+
 "E" - represents an enemy
+
 "P" - represents the player
+
 "@" - represents the endpoint
+
 
 A runthrough of which things can be initialized:
 
 A potion:
-Restores health to the player when used
-Identifier: p
-o, p, xcoordinate, ycoordinate, health restored
-Example:
-o,p,2,3,20
 
+Restores health to the player when used
+
+Identifier: p
+
+o, p, name of potion, xcoordinate, ycoordinate, health restored
+
+Example:
+
+o,p,Red Potion,2,3,20
+
+Creates a Potion named "Red Potion" which restores 20 hp at location (2,2) on the map. (0,0) is the top left corner of the map.
+
+
+A weapon:
+
+Increases the attack of the player when used
+
+Identifier: w
+
+o, w, name of weapon, xcoordinate, ycoordinate, attack added
+
+Example:
+
+o,w,Sword,10,5,2
+
+Creates a weapon named "Sword" which increases attack by 2 at (10,5) on the map. (0,0) is the top left corner of the map.
+
+
+A shoe:
+
+Increases the moveable tileset of the player when used
+
+Identifier: s
+
+o, s, name of shoe, xcoordinate, ycoordinate, tile to be added to player's moveable tileset
+
+Example:
+
+o,s,Flipper,1,3,~
+
+Creates a shoe named "Flipper" which allows the player to walk on "~" (water) tiles at (1,3) on the map. (0,0) is the top left corner of the map.
+
+
+An Enemy:
+
+Places an enemy on the map
+
+Identifier: N/A
+
+E, name of enemy, xcoordinate, ycoordinate, attack, max health
+
+Example:
+
+E,Goblin,2,10,2,30
+
+Creates an enemy named "Goblin" with attack of 2 and max health of 30 at (2,10) on the map. (0,0) is the top left corner of the map.
+
+
+The Player:
+
+Modifies the player's initial values
+
+Identifier: N/A
+
+P,starting xcoordinate,starting ycoordinate, attack, max health
+
+Example:
+
+P,1,1,3,50
+
+Sets the player's attack to 3, max health to 50 and the starting location of the player to (1,1). (0,0)is the top left corner of the map.
+
+Note: if there are multiple entries for the player in the initialization file, only the last one will be used (the one furthest down)
+
+
+The endpoint:
+
+Sets the endoint of the map
+
+Identifier: N/A
+
+@, xcoordinate, ycoordinate
+
+Example:
+
+@,9,9
+
+Sets the endpoint of the map at location (9,9). (0,0) is the top left corner of the map.
